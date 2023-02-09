@@ -1,19 +1,3 @@
-try_compile(RESULT_VAR PROJECT bin2c
-            SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/bin2c
-            BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/Utilities/bin2c
-            OUTPUT_VARIABLE output)
-if(NOT RESULT_VAR)
-  message(FATAL_ERROR "Failed to compile bin2c application.\n${output}")
-endif()
-
-find_program(bin2c_EXECUTABLE bin2c
-  "${CMAKE_CURRENT_BINARY_DIR}/Utilities/bin2c"
-  "${CMAKE_CURRENT_BINARY_DIR}/Utilities/bin2c/bin"
-  "${CMAKE_CURRENT_BINARY_DIR}/Utilities/bin2c/Debug"
-  "${CMAKE_CURRENT_BINARY_DIR}/Utilities/bin2c/Release"
-)
-message("bin2c_EXECUTABLE = ${bin2c_EXECUTABLE}")
-
 try_compile(RESULT_VAR PROJECT bin2coff
             SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Utilities/bin2coff
             BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/Utilities/bin2coff
@@ -44,10 +28,9 @@ if(MSVC)
   endif()
 endif()
 
-message("ARCHI : ${ARCH}")
+message("ARCHITECTURE : ${ARCH}")
 
 foreach(FONT ${FONT_RESOURCES})
-    #file(COPY ${FONT} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin2coff)
     file(COPY ${FONT} DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/fonts)
     get_filename_component(FONT_NAME ${FONT} NAME_WE)
     get_filename_component(FONT_EXT ${FONT} EXT)
@@ -62,16 +45,7 @@ foreach(FONT ${FONT_RESOURCES})
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         OUTPUT_VARIABLE OUT RESULT_VARIABLE VAL ERROR_VARIABLE ERR
     )
-    #[[
-    execute_process(COMMAND "${bin2c_EXECUTABLE}"
-        "${CMAKE_CURRENT_BINARY_DIR}/fonts/${INPUT_NAME}" "${CMAKE_CURRENT_SOURCE_DIR}/generated/resources/${OUTPUT_NAME}" "${FINAL_LABEL}" "x64"
-        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        OUTPUT_VARIABLE OUT RESULT_VARIABLE VAL ERROR_VARIABLE ERR
-    )]]
     if(VAL)
         message(FATAL_ERROR "Failed to run the command.\n${VAL}\n${ERR}")
     endif()
-    #message("OUTPUT : ${OUT}")
-    #message("VALUE : ${VAL}")
-    #message("ERROR : ${ERR}")
 endforeach()
