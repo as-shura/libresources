@@ -22,7 +22,7 @@ install(TARGETS libresources
 
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
-    rnnlmlibConfigVersion.cmake
+    libresourcesConfigVersion.cmake
     VERSION ${PACKAGE_VERSION}
     COMPATIBILITY AnyNewerVersion
 )
