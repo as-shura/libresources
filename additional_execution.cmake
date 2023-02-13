@@ -21,7 +21,7 @@ file(GLOB_RECURSE FONT_RESOURCES "resources/fonts/*.ttf" "resources/fonts/*.ttc"
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/generated/resources/compiled_fonts)
 
 if(MSVC)
-  if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+  if(CMAKE_EXE_LINKER_FLAGS MATCHES "x64")
     set(ARCH "x64")
   else()
     set(ARCH "Win32")
