@@ -24,7 +24,6 @@ install(TARGETS libresources
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
-  INCLUDES include
 )
 
 include(CMakePackageConfigHelpers)
