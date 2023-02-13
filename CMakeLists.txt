@@ -8,8 +8,11 @@ include(additional_execution.cmake)
 file(GLOB_RECURSE OBJS "generated/resources/*.obj")
 file(GLOB_RECURSE SRCS "platform/win32/dummy.c")
 
+set(HEADERS
+  include/dummy.h
+)
 # Add executable
-add_library(libresources ${SRCS} ${OBJS} ${RESOURCES})
+add_library(libresources ${SRCS} ${OBJS} ${RESOURCES} ${HEADERS})
 
 # Add CMake find_package() integration
 set(CONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}")
@@ -19,11 +22,14 @@ set(NAMESPACE "unofficial::libresources::")
 
 export(TARGETS libresources NAMESPACE ${NAMESPACE} FILE libresourcesTargets.cmake)
 
+install(FILES ${HEADERS} DESTINATION include)
+
 install(TARGETS libresources
   EXPORT ${TARGETS_EXPORT_NAME}
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib
+  INCLUDES DESTINATION include
 )
 
 include(CMakePackageConfigHelpers)
